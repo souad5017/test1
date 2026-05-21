@@ -1,0 +1,1719 @@
+<body>
+
+<div class="screen auth-screen active" id="screen-login">
+  <div class="auth-logo"><img src="LOGO_SRC" alt="Chattt" style="height:38px;display:block"></div>
+  <div class="auth-card">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Sign in to your workspace to manage your conversations.</p>
+    <div class="field"><label>Email address</label><input type="email" placeholder="you@company.com" value="hamza@highness.co"></div>
+    <div class="field"><label>Password</label><input type="password" placeholder="••••••••" value="password"></div>
+    <div style="display:flex;justify-content:flex-end;margin-top:-8px;margin-bottom:16px"><span style="font-size:12px;color:var(--ink3);cursor:pointer;border-bottom:1px solid var(--border)">Forgot password?</span></div>
+    <button class="btn-primary" onclick="go('dashboard')">Sign in</button>
+    <div class="divider-line">or</div>
+    <button class="save-btn secondary" style="width:100%;padding:10px;display:flex;align-items:center;justify-content:center;gap:8px" onclick="go('dashboard')"><span>🔑</span> Continue with Google</button>
+  </div>
+  <div class="auth-footer">Don't have an account? <a onclick="go('signup')">Create one free</a></div>
+</div>
+
+<!-- ═══════════════════════════════
+     SIGNUP
+═══════════════════════════════ -->
+
+<div class="screen auth-screen" id="screen-signup">
+  <div class="auth-logo"><img src="LOGO_SRC" alt="Chattt" style="height:38px;display:block"></div>
+  <div class="auth-card">
+    <h1>Create your account</h1>
+    <p class="subtitle">Set up your workspace in 30 seconds. No credit card required.</p>
+    <div class="field-row">
+      <div class="field" style="margin-bottom:0"><label>First name</label><input type="text" placeholder="Hamza"></div>
+      <div class="field" style="margin-bottom:0"><label>Last name</label><input type="text" placeholder="Doe"></div>
+    </div>
+    <div class="field" style="margin-top:16px"><label>Work email</label><input type="email" placeholder="you@company.com"></div>
+    <div class="field"><label>Workspace name</label><input type="text" placeholder="Acme Studio"></div>
+    <div class="field"><label>Password</label><input type="password" placeholder="Min. 8 characters"></div>
+    <button class="btn-primary" onclick="go('dashboard')">Create free account</button>
+    <p style="font-size:11px;color:var(--ink4);text-align:center;margin-top:12px;line-height:1.5">By signing up you agree to our <span style="border-bottom:1px solid var(--border);cursor:pointer">Terms</span> and <span style="border-bottom:1px solid var(--border);cursor:pointer">Privacy Policy</span>.</p>
+  </div>
+  <div class="auth-footer">Already have an account? <a onclick="go('login')">Sign in</a></div>
+</div>
+
+<!-- ═══════════════════════════════
+     DASHBOARD
+═══════════════════════════════ -->
+
+<div class="screen app-screen" id="screen-dashboard">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="127a737f6873527a7b757a7c7761613c717d">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content">
+    <div class="page-header">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Good morning, Hamza — here's your workspace at a glance.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">May 10, 2026</div>
+      </div>
+    </div>
+    <div class="page-body">
+
+      <!-- 4 KPI cards with sparklines -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px">
+
+        <!-- Conversations -->
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="go('inbox')">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:12px;display:flex;align-items:center;gap:6px">💬 Conversations</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1;margin-bottom:6px">48</div>
+          <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:12px">↑ +18% vs last month</div>
+          <div style="display:flex;align-items:flex-end;gap:3px;height:32px">
+            <div style="flex:1;background:var(--border2);border-radius:2px 2px 0 0;height:40%"></div>
+            <div style="flex:1;background:var(--border2);border-radius:2px 2px 0 0;height:55%"></div>
+            <div style="flex:1;background:var(--border2);border-radius:2px 2px 0 0;height:35%"></div>
+            <div style="flex:1;background:var(--border2);border-radius:2px 2px 0 0;height:65%"></div>
+            <div style="flex:1;background:var(--border2);border-radius:2px 2px 0 0;height:50%"></div>
+            <div style="flex:1;background:var(--border2);border-radius:2px 2px 0 0;height:70%"></div>
+            <div style="flex:1;background:var(--orange);border-radius:2px 2px 0 0;height:90%;opacity:.7"></div>
+            <div style="flex:1;background:var(--orange);border-radius:2px 2px 0 0;height:100%"></div>
+          </div>
+          <div style="font-size:10px;font-family:var(--mono);color:var(--ink4);margin-top:6px">Last 30 days</div>
+        </div>
+
+        <!-- Offline messages -->
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="go('inbox')">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:12px">📭 Offline messages</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1;margin-bottom:6px">7</div>
+          <div style="font-size:12px;font-weight:600;color:var(--amber);margin-bottom:12px">⚑ 3 unread right now</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0"></div>
+              <div style="font-size:11px;color:var(--ink3);flex:1">Jordan M.</div>
+              <div style="font-size:10px;font-family:var(--mono);color:var(--ink4)">18m ago</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0"></div>
+              <div style="font-size:11px;color:var(--ink3);flex:1">Casey R.</div>
+              <div style="font-size:10px;font-family:var(--mono);color:var(--ink4)">3h ago</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--amber);flex-shrink:0"></div>
+              <div style="font-size:11px;color:var(--ink3);flex:1">Dana W.</div>
+              <div style="font-size:10px;font-family:var(--mono);color:var(--ink4)">6h ago</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Avg response -->
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="go('analytics')">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:12px">⚡ Avg response time</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1;margin-bottom:6px">4m</div>
+          <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:12px">↓ 2m faster than last month</div>
+          <div style="background:var(--surface);border-radius:var(--r-sm);padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+            <div style="display:flex;justify-content:space-between;font-size:11px">
+              <span style="color:var(--ink3)">Peak hour</span><span style="font-family:var(--mono);font-weight:600">2–3 PM</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px">
+              <span style="color:var(--ink3)">Busiest day</span><span style="font-family:var(--mono);font-weight:600">Monday</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;font-size:11px">
+              <span style="color:var(--ink3)">Avg session</span><span style="font-family:var(--mono);font-weight:600">6m 24s</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contacts -->
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px;cursor:pointer;transition:all .15s" onmouseover="this.style.borderColor='var(--orange)'" onmouseout="this.style.borderColor='var(--border)'" onclick="go('contacts')">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink4);margin-bottom:12px">👤 Contacts captured</div>
+          <div style="font-size:34px;font-weight:800;letter-spacing:-.04em;color:var(--ink);line-height:1;margin-bottom:6px">9</div>
+          <div style="font-size:12px;font-weight:600;color:var(--green);margin-bottom:12px">↑ +4 this month</div>
+          <div style="display:flex;flex-direction:column;gap:5px">
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px">
+              <span style="color:var(--ink3)">Live chat</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <div style="height:6px;width:48px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:45%;background:var(--ink)"></div></div>
+                <span style="font-family:var(--mono);font-weight:600;color:var(--ink2)">4</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px">
+              <span style="color:var(--ink3)">Offline form</span>
+              <div style="display:flex;align-items:center;gap:6px">
+                <div style="height:6px;width:48px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:55%;background:var(--amber)"></div></div>
+                <span style="font-family:var(--mono);font-weight:600;color:var(--ink2)">5</span>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:11px">
+              <span style="color:var(--ink3)">Resolution rate</span>
+              <span style="font-family:var(--mono);font-weight:700;color:var(--green)">85%</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom row: recent + top pages -->
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:14px">
+
+        <!-- Recent conversations -->
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+          <div style="padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+            <div style="font-size:13px;font-weight:700;letter-spacing:-.02em">Recent conversations</div>
+            <span style="font-size:12px;font-weight:500;color:var(--ink3);cursor:pointer" onclick="go('inbox')">View all →</span>
+          </div>
+          <div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;padding:11px 18px;border-bottom:1px solid var(--border2);align-items:center;gap:10px;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+              <div style="display:flex;align-items:center;gap:9px">
+                <div style="width:28px;height:28px;border-radius:50%;background:#e8f5e9;color:#2e7d32;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">A</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">Alex K.</div>
+                  <div style="font-size:11px;color:var(--ink4);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:160px">I'd like to know about pricing…</div>
+                </div>
+              </div>
+              <div style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--green-bg);color:var(--green);white-space:nowrap">● Live</div>
+              <div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">2m</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;padding:11px 18px;border-bottom:1px solid var(--border2);align-items:center;gap:10px;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+              <div style="display:flex;align-items:center;gap:9px">
+                <div style="width:28px;height:28px;border-radius:50%;background:#fff3e0;color:#e65100;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">J</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">Jordan M.</div>
+                  <div style="font-size:11px;color:var(--ink4);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Do you serve the Mississauga area?</div>
+                </div>
+              </div>
+              <div style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--amber-bg);color:var(--amber);white-space:nowrap">⚑ Offline</div>
+              <div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">18m</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;padding:11px 18px;border-bottom:1px solid var(--border2);align-items:center;gap:10px;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+              <div style="display:flex;align-items:center;gap:9px">
+                <div style="width:28px;height:28px;border-radius:50%;background:#fce4ec;color:#c62828;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">C</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">Casey R.</div>
+                  <div style="font-size:11px;color:var(--ink4);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">We have a tight deadline…</div>
+                </div>
+              </div>
+              <div style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--amber-bg);color:var(--amber);white-space:nowrap">⚑ Offline</div>
+              <div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">3h</div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr auto auto;padding:11px 18px;align-items:center;gap:10px;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+              <div style="display:flex;align-items:center;gap:9px">
+                <div style="width:28px;height:28px;border-radius:50%;background:#e8e8e8;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">S</div>
+                <div>
+                  <div style="font-size:13px;font-weight:600">Sam T.</div>
+                  <div style="font-size:11px;color:var(--ink4);max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Thanks! I'll book a call tomorrow.</div>
+                </div>
+              </div>
+              <div style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 8px;border-radius:20px;background:var(--surface);color:var(--ink4);white-space:nowrap">✓ Closed</div>
+              <div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">1h</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top pages + quick stats -->
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+            <div style="padding:14px 18px;border-bottom:1px solid var(--border);font-size:13px;font-weight:700;letter-spacing:-.02em">Top pages</div>
+            <div style="padding:6px 0">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 18px;font-size:12px">
+                <span style="font-family:var(--mono);color:var(--ink2)">/pricing</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="height:5px;width:56px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:100%;background:var(--orange)"></div></div>
+                  <span style="font-weight:700;font-family:var(--mono);color:var(--ink)">18</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 18px;font-size:12px">
+                <span style="font-family:var(--mono);color:var(--ink2)">/contact</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="height:5px;width:56px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:61%;background:var(--orange)"></div></div>
+                  <span style="font-weight:700;font-family:var(--mono);color:var(--ink)">11</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 18px;font-size:12px">
+                <span style="font-family:var(--mono);color:var(--ink2)">/services</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="height:5px;width:56px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:50%;background:var(--orange)"></div></div>
+                  <span style="font-weight:700;font-family:var(--mono);color:var(--ink)">9</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 18px;font-size:12px">
+                <span style="font-family:var(--mono);color:var(--ink2)">/about</span>
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="height:5px;width:56px;background:var(--border2);border-radius:3px;overflow:hidden"><div style="height:100%;width:33%;background:var(--orange)"></div></div>
+                  <span style="font-weight:700;font-family:var(--mono);color:var(--ink)">6</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="background:var(--ink);border-radius:var(--r-lg);padding:18px 20px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:rgba(255,255,255,.35);margin-bottom:14px">This week</div>
+            <div style="display:flex;flex-direction:column;gap:10px">
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="color:rgba(255,255,255,.5)">New conversations</span>
+                <span style="font-family:var(--mono);font-weight:700;color:white">14</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="color:rgba(255,255,255,.5)">Emails captured</span>
+                <span style="font-family:var(--mono);font-weight:700;color:white">4</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="color:rgba(255,255,255,.5)">Resolved</span>
+                <span style="font-family:var(--mono);font-weight:700;color:white">11</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;font-size:12px">
+                <span style="color:rgba(255,255,255,.5)">Canned reply used</span>
+                <span style="font-family:var(--mono);font-weight:700;color:white">38%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen app-screen" id="screen-inbox">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0169606c7b6041696866696f6472722f626e">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content" style="overflow:hidden">
+    <div class="page-header">
+      <div><h1>Inbox</h1><p>3 live conversations · 7 offline messages waiting for reply.</p></div>
+      <div style="display:flex;gap:10px;align-items:center"><div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">May 10, 2026</div></div>
+    </div>
+    <div class="inbox-layout" style="height:100%">
+      <div class="conv-list-pane">
+        <div class="conv-list-header">
+          <h2>Inbox</h2>
+          <div class="inbox-tabs">
+            <button class="inbox-tab active" onclick="switchTab(this)">All</button>
+            <button class="inbox-tab" onclick="switchTab(this)">Live</button>
+            <button class="inbox-tab" onclick="switchTab(this)">Offline</button>
+          </div>
+        </div>
+        <div class="conv-list-search">
+          <div class="search-input-wrap"><span class="search-icon">🔍</span><input class="search-input" type="text" placeholder="Search conversations…"></div>
+        </div>
+        <div class="conv-list-items">
+
+          <!-- Alex — live + contact captured -->
+          <div class="conv-item selected unread" onclick="selectConv(this,'Alex K.','alex@gmail.com','live','/pricing','alex')">
+            <div class="conv-item-top"><div class="ci-avatar" style="background:#e8f5e9;color:#2e7d32">A</div><div class="ci-name">Alex K.</div><div class="ci-time">2m</div></div>
+            <div class="ci-preview">Sure, my email is <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c7a6aba2bf87a0aaa6aeabe9a4a8aa">[email&#160;protected]</a></div>
+            <div class="ci-tags"><span class="ci-tag live">● Live</span><span class="ci-tag contact">✉ Contact saved</span></div>
+          </div>
+
+          <!-- Jordan — offline form submission -->
+          <div class="conv-item unread" onclick="selectConv(this,'Jordan M.','jordan@outlook.com','offline','/contact','jordan')">
+            <div class="conv-item-top"><div class="ci-avatar" style="background:#fff3e0;color:#e65100">J</div><div class="ci-name">Jordan M.</div><div class="ci-time">18m</div></div>
+            <div class="ci-preview">Do you serve the Mississauga area?</div>
+            <div class="ci-tags"><span class="ci-tag offline">⚑ Offline msg</span><span class="ci-tag contact">✉ Contact saved</span></div>
+          </div>
+
+          <!-- Casey — offline form, no email yet shown -->
+          <div class="conv-item unread" onclick="selectConv(this,'Casey R.','casey@outlook.com','offline','/services','casey')">
+            <div class="conv-item-top"><div class="ci-avatar" style="background:#fce4ec;color:#c62828">C</div><div class="ci-name">Casey R.</div><div class="ci-time">3h</div></div>
+            <div class="ci-preview">We have a tight deadline for a corporate reno…</div>
+            <div class="ci-tags"><span class="ci-tag offline">⚑ Offline msg</span><span class="ci-tag contact">✉ Contact saved</span></div>
+          </div>
+
+          <!-- Sam — closed, no email -->
+          <div class="conv-item" onclick="selectConv(this,'Sam T.','','closed','/about','sam')">
+            <div class="conv-item-top"><div class="ci-avatar">S</div><div class="ci-name">Sam T.</div><div class="ci-time">1h</div></div>
+            <div class="ci-preview">Thanks! I'll book a call tomorrow.</div>
+            <div class="ci-tags"><span class="ci-tag closed">Closed</span></div>
+          </div>
+
+          <!-- Morgan — closed -->
+          <div class="conv-item" onclick="selectConv(this,'Morgan L.','','closed','/home','morgan')">
+            <div class="conv-item-top"><div class="ci-avatar" style="background:#ede7f6;color:#4527a0">M</div><div class="ci-name">Morgan L.</div><div class="ci-time">5h</div></div>
+            <div class="ci-preview">How long does a kitchen renovation take?</div>
+            <div class="ci-tags"><span class="ci-tag closed">Closed</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- THREAD PANE -->
+      <div class="thread-pane">
+
+        <!-- Thread header (dynamic) -->
+        <div class="thread-header" id="threadHeader">
+          <div class="th-avatar" id="th-avatar">A</div>
+          <div class="th-info">
+            <div class="th-name" id="th-name">Alex K.</div>
+            <div class="th-meta">
+              <span id="th-status" style="color:var(--green)">● Live conversation</span>
+              <span>📄 <span id="th-page">/pricing</span></span>
+              <span>🕐 Started 2 min ago</span>
+            </div>
+            <!-- Contact pill — shown when email is known -->
+            <div class="th-contact-pill" id="th-contact-pill">
+              <span class="cp-icon">✉</span>
+              <span class="th-contact-email" id="th-contact-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4a2b262f320a2d272b232664292527">[email&#160;protected]</a></span>
+              <button class="th-contact-copy" onclick="showToast('Email copied!')">⎘</button>
+              <button class="th-contact-copy" onclick="go('contacts')" title="View contact">↗</button>
+            </div>
+          </div>
+          <div class="th-actions">
+            <button class="th-btn" onclick="showToast('Assigned to you')">Assign</button>
+            <button class="th-btn primary" id="resolveBtn" onclick="resolveConv()">Resolve</button>
+          </div>
+        </div>
+
+        <!-- Email detection bar (appears when email detected in live chat) -->
+        <div class="email-detect-bar" id="emailDetectBar">
+          <span class="edb-icon">✉</span>
+          <div class="edb-text">Email detected: <strong id="detectedEmail"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81e0ede4f9c1e6ece0e8edafe2eeec">[email&#160;protected]</a></strong></div>
+          <button class="edb-save" onclick="saveContact()">Save as contact</button>
+          <button class="edb-dismiss" onclick="document.getElementById('emailDetectBar').classList.remove('show')">×</button>
+        </div>
+
+        <!-- Messages -->
+        <div class="thread-msgs" id="threadMsgs">
+          <div class="thread-date-divider">Today — May 9</div>
+          <div class="tmsg visitor">
+            <div class="tmsg-row"><div class="tmsg-av visitor-av">A</div><div class="tmsg-bubble">Hi, I'm interested in a full kitchen and living room renovation.</div></div>
+            <div class="tmsg-time">9:41 AM</div>
+          </div>
+          <div class="tmsg agent">
+            <div class="tmsg-row"><div class="tmsg-av">H</div><div class="tmsg-bubble">Hi Alex! Wonderful — that's one of our favourite scopes to work on. Could you share a bit about the space and your timeline?</div></div>
+            <div class="tmsg-time">9:43 AM</div>
+          </div>
+          <div class="tmsg visitor">
+            <div class="tmsg-row"><div class="tmsg-av visitor-av">A</div><div class="tmsg-bubble">About 800 sq ft. Hoping to start in 2 months, budget around $40–50k.</div></div>
+            <div class="tmsg-time">9:45 AM</div>
+          </div>
+          <div class="tmsg agent">
+            <div class="tmsg-row"><div class="tmsg-av">H</div><div class="tmsg-bubble">That's very workable! I'd love to set up a quick discovery call. Can I grab your email to send you the booking link?</div></div>
+            <div class="tmsg-time">9:46 AM</div>
+          </div>
+          <div class="tmsg visitor" id="emailMsg" style="display:none">
+            <div class="tmsg-row"><div class="tmsg-av visitor-av">A</div><div class="tmsg-bubble">Sure, my email is <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="7819141d00381f15191114561b1715">[email&#160;protected]</a></div></div>
+            <div class="tmsg-time">9:47 AM</div>
+          </div>
+        </div>
+
+        <!-- Reply -->
+        <div class="reply-area">
+          <div style="font-size:11px;color:var(--ink4);margin-bottom:8px;font-family:var(--mono)">
+            💡 Try typing "What's your email?" — or simulate visitor sending email below
+          </div>
+          <div class="reply-box">
+            <textarea class="reply-textarea" placeholder="Reply to Alex K…" id="replyInput" onkeydown="handleReplyKey(event)"></textarea>
+            <div class="reply-footer">
+              <div class="reply-tools">
+                <button class="reply-tool-btn" title="Emoji">😊</button>
+                <button class="reply-tool-btn" title="Canned reply" onclick="insertCanned()">⚡</button>
+                <button class="reply-tool-btn" title="Simulate visitor sending email" onclick="simulateEmailMsg()" style="font-size:11px;padding:4px 8px;color:var(--purple)">✉ Sim email</button>
+              </div>
+              <button class="reply-send" onclick="sendReply()">Send reply <span style="font-size:11px;opacity:.6;font-family:var(--mono)">⌘↵</span></button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     WIDGET BUILDER
+═══════════════════════════════ -->
+</div>
+
+<div class="screen app-screen" id="screen-contacts">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="92faf3ffe8f3d2fafbf5fafcf7e1e1bcf1fd">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content">
+    <div class="page-header">
+      <div><h1>Contacts</h1><p>9 contacts collected — 5 from offline forms, 4 from live chat.</p></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <button class="save-btn secondary" onclick="showToast('Upgrade to Pro to export contacts')">↓ Export CSV</button>
+        <button class="save-btn" onclick="showToast('Contact added')">+ Add contact</button>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="pro-lock" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#f5f3ff,#ede9fe);border:1.5px solid #ddd6fe;border-radius:var(--r-lg);padding:16px 20px;margin-bottom:20px">
+        <span style="font-size:20px;flex-shrink:0">🔒</span>
+        <div style="flex:1;font-size:13px;color:var(--purple)"><strong style="font-weight:700;display:block;margin-bottom:2px">Export & full contact history is a Pro feature</strong>Upgrade to export contacts as CSV and see full conversation history per contact.</div>
+        <button class="pro-lock-btn" onclick="showToast('Redirecting to upgrade…')" style="font-size:12px;font-weight:700;background:var(--orange);color:white;border:none;border-radius:var(--r-pill);padding:7px 16px;cursor:pointer;white-space:nowrap">Upgrade — $19/mo</button>
+      </div>
+      <div style="display:flex;gap:12px;margin-bottom:18px">
+        <div style="display:flex;align-items:center;gap:8px;background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-sm);padding:8px 14px;flex:1">
+          <span style="color:var(--ink4)">🔍</span>
+          <input style="flex:1;border:none;background:none;font-size:13px;color:var(--ink);outline:none;font-family:var(--sans)" type="text" placeholder="Search by name or email…">
+        </div>
+        <select style="padding:8px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:13px;color:var(--ink2);background:white;outline:none;font-family:var(--sans)">
+          <option>All sources</option><option>Offline form</option><option>Live chat</option>
+        </select>
+      </div>
+      <div style="background:var(--white);border:1.5px solid var(--border);border-radius:var(--r-lg);overflow:hidden">
+        <div style="display:grid;grid-template-columns:2fr 2fr 100px 100px 80px 80px;padding:10px 18px;background:var(--surface);border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--ink3);letter-spacing:.04em;text-transform:uppercase">
+          <span>Name</span><span>Email</span><span>Source</span><span>Convs</span><span>Added</span><span></span>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 2fr 100px 100px 80px 80px;padding:12px 18px;border-bottom:1px solid var(--border2);align-items:center;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:#e8f5e9;color:#2e7d32;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">A</div><span style="font-size:13px;font-weight:600">Alex K.</span></div>
+          <span style="font-size:12px;color:var(--ink3);font-family:var(--mono)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="31505d544971565c50585d1f525e5c">[email&#160;protected]</a></span>
+          <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;background:var(--green-bg);color:var(--green);display:inline-block">Live chat</span>
+          <span style="font-size:12px;font-family:var(--mono)">3</span>
+          <span style="font-size:11px;color:var(--ink4);font-family:var(--mono)">Today</span>
+          <button style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;cursor:pointer;color:var(--ink3);font-family:var(--sans)" onmouseover="this.style.borderColor='var(--ink)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink3)'">Open</button>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 2fr 100px 100px 80px 80px;padding:12px 18px;border-bottom:1px solid var(--border2);align-items:center;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:#fff3e0;color:#e65100;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">J</div><span style="font-size:13px;font-weight:600">Jordan M.</span></div>
+          <span style="font-size:12px;color:var(--ink3);font-family:var(--mono)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5832372a3c393618372d2c34373733763b3735">[email&#160;protected]</a></span>
+          <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;background:var(--amber-bg);color:var(--amber);display:inline-block">Offline form</span>
+          <span style="font-size:12px;font-family:var(--mono)">1</span>
+          <span style="font-size:11px;color:var(--ink4);font-family:var(--mono)">Today</span>
+          <button style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;cursor:pointer;color:var(--ink3);font-family:var(--sans)" onmouseover="this.style.borderColor='var(--ink)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink3)'">Open</button>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 2fr 100px 100px 80px 80px;padding:12px 18px;border-bottom:1px solid var(--border2);align-items:center;cursor:pointer;transition:background .1s" onmouseover="this.style.background='var(--surface)'" onmouseout="this.style.background=''" onclick="go('inbox')">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:#fce4ec;color:#c62828;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">C</div><span style="font-size:13px;font-weight:600">Casey R.</span></div>
+          <span style="font-size:12px;color:var(--ink3);font-family:var(--mono)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="c5a6a4b6a0bc85aab0b1a9aaaaaeeba6aaa8">[email&#160;protected]</a></span>
+          <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;background:var(--amber-bg);color:var(--amber);display:inline-block">Offline form</span>
+          <span style="font-size:12px;font-family:var(--mono)">1</span>
+          <span style="font-size:11px;color:var(--ink4);font-family:var(--mono)">Today</span>
+          <button style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;cursor:pointer;color:var(--ink3);font-family:var(--sans)" onmouseover="this.style.borderColor='var(--ink)';this.style.color='var(--ink)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink3)'">Open</button>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 2fr 100px 100px 80px 80px;padding:12px 18px;border-bottom:1px solid var(--border2);align-items:center">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:#e3f2fd;color:#1565c0;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">R</div><span style="font-size:13px;font-weight:600">Riley B.</span></div>
+          <span style="font-size:12px;color:var(--ink3);font-family:var(--mono)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e2908b8e879ba2818d8f92838c9bcc8183">[email&#160;protected]</a></span>
+          <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;background:var(--amber-bg);color:var(--amber);display:inline-block">Offline form</span>
+          <span style="font-size:12px;font-family:var(--mono)">2</span>
+          <span style="font-size:11px;color:var(--ink4);font-family:var(--mono)">May 8</span>
+          <button style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;cursor:pointer;color:var(--ink3);font-family:var(--sans)">Open</button>
+        </div>
+        <div style="display:grid;grid-template-columns:2fr 2fr 100px 100px 80px 80px;padding:12px 18px;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px"><div style="width:28px;height:28px;border-radius:50%;background:#f3e8fd;color:#6a0dad;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center">M</div><span style="font-size:13px;font-weight:600">Morgan L.</span></div>
+          <span style="font-size:12px;color:var(--ink3);font-family:var(--mono)"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="88e5e7faefe9e6a6e4c8efe5e9e1e4a6ebe7e5">[email&#160;protected]</a></span>
+          <span style="font-size:11px;font-weight:600;padding:3px 8px;border-radius:10px;background:var(--green-bg);color:var(--green);display:inline-block">Live chat</span>
+          <span style="font-size:12px;font-family:var(--mono)">1</span>
+          <span style="font-size:11px;color:var(--ink4);font-family:var(--mono)">May 7</span>
+          <button style="font-size:12px;font-weight:500;padding:5px 10px;border-radius:var(--r-sm);border:1.5px solid var(--border);background:white;cursor:pointer;color:var(--ink3);font-family:var(--sans)">Open</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="screen app-screen" id="screen-analytics">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="8de5ece0f7eccde5e4eae5e3e8fefea3eee2">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content">
+    <div class="page-header">
+      <div><h1>Analytics</h1><p>Performance overview for Acme Studio workspace.</p></div>
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="date-range">
+          <button class="dr-btn" onclick="setRange(this,'7d')">7d</button>
+          <button class="dr-btn active" onclick="setRange(this,'30d')">30d</button>
+          <button class="dr-btn" onclick="setRange(this,'90d')">90d</button>
+        </div>
+      </div>
+    </div>
+    <div class="page-body">
+
+      <!-- KPI row -->
+      <div class="analytics-grid">
+        <div class="an-card">
+          <div class="an-label">💬 Conversations</div>
+          <div class="an-val" id="anConvs">48</div>
+          <div class="an-delta up" id="anConvsDelta">↑ +18% vs last period</div>
+        </div>
+        <div class="an-card">
+          <div class="an-label">⚡ Avg response</div>
+          <div class="an-val" id="anResp">4m</div>
+          <div class="an-delta up" id="anRespDelta">↓ 2m faster than before</div>
+        </div>
+        <div class="an-card">
+          <div class="an-label">✓ Resolution rate</div>
+          <div class="an-val" id="anRes">85%</div>
+          <div class="an-delta up" id="anResDelta">↑ +6% vs last period</div>
+        </div>
+        <div class="an-card">
+          <div class="an-label">👤 Contacts captured</div>
+          <div class="an-val" id="anContacts">9</div>
+          <div class="an-delta up" id="anContactsDelta">↑ +4 this period</div>
+        </div>
+      </div>
+
+      <!-- Chart row -->
+      <div class="chart-row">
+
+        <!-- Conversations over time -->
+        <div class="chart-card">
+          <div class="chart-header">
+            <div><h3>Conversations over time</h3><p id="chartSubLabel">Last 30 days</p></div>
+            <div class="chart-tabs">
+              <button class="chart-tab active" onclick="setChartView(this,'convs')">Convs</button>
+              <button class="chart-tab" onclick="setChartView(this,'msgs')">Messages</button>
+              <button class="chart-tab" onclick="setChartView(this,'contacts')">Contacts</button>
+            </div>
+          </div>
+          <div class="chart-body">
+            <div class="bar-chart" id="mainBarChart"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:10px;padding:0 2px">
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="chartStart">Apr 9</span>
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="chartMid">Apr 24</span>
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)" id="chartEnd">May 9</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source breakdown -->
+        <div class="chart-card">
+          <div class="chart-header"><div><h3>Message source</h3><p>Where conversations start</p></div></div>
+          <div class="chart-body">
+            <div class="stat-list">
+              <div class="stat-list-item">
+                <div class="sli-color" style="background:var(--ink)"></div>
+                <div class="sli-label">Live chat</div>
+                <div class="sli-val">31</div>
+                <div class="sli-pct">65%</div>
+              </div>
+              <div class="stat-list-item">
+                <div class="sli-color" style="background:var(--amber)"></div>
+                <div class="sli-label">Offline form</div>
+                <div class="sli-val">14</div>
+                <div class="sli-pct">29%</div>
+              </div>
+              <div class="stat-list-item">
+                <div class="sli-color" style="background:var(--border)"></div>
+                <div class="sli-label">Abandoned</div>
+                <div class="sli-val">3</div>
+                <div class="sli-pct">6%</div>
+              </div>
+            </div>
+            <div style="margin-top:16px">
+              <div style="font-size:11px;color:var(--ink4);margin-bottom:6px;font-family:var(--mono)">Volume trend (30d)</div>
+              <div class="sparkline-wrap" id="sparkline"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom row -->
+      <div class="chart-row">
+
+        <!-- Top pages -->
+        <div class="chart-card">
+          <div class="chart-header"><div><h3>Top pages</h3><p>Where visitors start conversations</p></div></div>
+          <div class="chart-body" style="padding:0">
+            <table class="an-table" style="padding:0 20px;display:table;width:100%">
+              <thead><tr style=""><th style="padding:10px 20px">Page</th><th>Conversations</th><th>Contacts</th><th>Resolution</th></tr></thead>
+              <tbody>
+                <tr>
+                  <td style="padding:12px 20px;font-family:var(--mono);font-size:12px">/pricing</td>
+                  <td class="mono">18</td><td class="mono">4</td>
+                  <td><span class="an-pill" style="background:var(--green-bg);color:var(--green)">89%</span></td>
+                </tr>
+                <tr>
+                  <td style="padding:12px 20px;font-family:var(--mono);font-size:12px">/contact</td>
+                  <td class="mono">11</td><td class="mono">3</td>
+                  <td><span class="an-pill" style="background:var(--green-bg);color:var(--green)">82%</span></td>
+                </tr>
+                <tr>
+                  <td style="padding:12px 20px;font-family:var(--mono);font-size:12px">/services</td>
+                  <td class="mono">9</td><td class="mono">2</td>
+                  <td><span class="an-pill" style="background:var(--amber-bg);color:var(--amber)">78%</span></td>
+                </tr>
+                <tr>
+                  <td style="padding:12px 20px;font-family:var(--mono);font-size:12px">/about</td>
+                  <td class="mono">6</td><td class="mono">0</td>
+                  <td><span class="an-pill" style="background:var(--green-bg);color:var(--green)">100%</span></td>
+                </tr>
+                <tr>
+                  <td style="padding:12px 20px;font-family:var(--mono);font-size:12px">/home</td>
+                  <td class="mono">4</td><td class="mono">0</td>
+                  <td><span class="an-pill" style="background:var(--amber-bg);color:var(--amber)">75%</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Response time by hour -->
+        <div class="chart-card">
+          <div class="chart-header"><div><h3>Busiest hours</h3><p>Conversations by time of day</p></div></div>
+          <div class="chart-body">
+            <div class="bar-chart" id="hourChart" style="height:100px"></div>
+            <div style="display:flex;justify-content:space-between;margin-top:8px">
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)">9am</span>
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)">12pm</span>
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)">3pm</span>
+              <span style="font-size:10px;color:var(--ink4);font-family:var(--mono)">6pm</span>
+            </div>
+            <div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--border2)">
+              <div style="font-size:12px;color:var(--ink3);margin-bottom:10px;font-weight:500">Quick stats</div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink3)">Peak hour</span><span style="font-family:var(--mono);font-weight:500">2–3 PM</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink3)">Offline msgs (after hours)</span><span style="font-family:var(--mono);font-weight:500">7</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink3)">Avg session length</span><span style="font-family:var(--mono);font-weight:500">6m 24s</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px"><span style="color:var(--ink3)">Canned reply usage</span><span style="font-family:var(--mono);font-weight:500">38%</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════
+     CANNED REPLIES
+═══════════════════════════════ -->
+</div>
+
+<div class="screen app-screen" id="screen-canned">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="aec6cfc3d4cfeec6c7c9c6c0cbdddd80cdc1">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content" style="overflow:hidden">
+    <div class="page-header">
+      <div><h1>Canned messages</h1><p>Saved replies your team can fire with a /shortcut from any conversation.</p></div>
+      <div style="display:flex;gap:10px;align-items:center"><div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">May 10, 2026</div></div>
+    </div>
+    <div class="canned-layout">
+
+      <!-- Left: category + list -->
+      <div class="canned-sidebar">
+        <div class="canned-sidebar-header">
+          <h2>Canned Replies</h2>
+          <div style="display:flex;gap:6px">
+            <button class="add-canned-btn" style="flex:1" onclick="newCanned()">+ New reply</button>
+            <button class="add-canned-btn" onclick="newCannedCategory()" style="flex:1;background:var(--surface);color:var(--ink2);border:1.5px solid var(--border)">+ Category</button>
+          </div>
+        </div>
+        <div class="canned-categories">
+          <div class="canned-cat active" onclick="filterCat(this,'all')">
+            <div class="canned-cat-name"><span class="canned-cat-icon">📋</span> All replies</div>
+            <div class="canned-cat-count">8</div>
+          </div>
+          <div class="canned-cat" onclick="filterCat(this,'greeting')">
+            <div class="canned-cat-name"><span class="canned-cat-icon">👋</span> Greetings</div>
+            <div class="canned-cat-count">2</div>
+          </div>
+          <div class="canned-cat" onclick="filterCat(this,'pricing')">
+            <div class="canned-cat-name"><span class="canned-cat-icon">💰</span> Pricing</div>
+            <div class="canned-cat-count">2</div>
+          </div>
+          <div class="canned-cat" onclick="filterCat(this,'followup')">
+            <div class="canned-cat-name"><span class="canned-cat-icon">📅</span> Follow-up</div>
+            <div class="canned-cat-count">2</div>
+          </div>
+          <div class="canned-cat" onclick="filterCat(this,'closing')">
+            <div class="canned-cat-name"><span class="canned-cat-icon">✅</span> Closing</div>
+            <div class="canned-cat-count">2</div>
+          </div>
+        </div>
+        <div class="canned-list" id="cannedList"></div>
+      </div>
+
+      <!-- Right: editor -->
+      <div class="canned-editor">
+        <div class="canned-editor-header">
+          <div>
+            <h3 id="editorTitle">Book a discovery call</h3>
+            <p id="editorShortcut">Shortcut: /book</p>
+          </div>
+          <div class="canned-editor-actions">
+            <button class="ed-btn danger" onclick="deleteCanned()">Delete</button>
+            <button class="ed-btn" onclick="showToast('Changes discarded')">Cancel</button>
+            <button class="ed-btn primary" onclick="saveCanned()">Save reply</button>
+          </div>
+        </div>
+        <div class="canned-editor-body">
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+            <div class="ed-field" style="margin:0">
+              <label>Title</label>
+              <input type="text" id="edTitle" value="Book a discovery call">
+            </div>
+            <div class="ed-field" style="margin:0">
+              <label>Shortcut <span style="color:var(--ink4);font-weight:400">(type / in inbox to trigger)</span></label>
+              <input type="text" id="edShortcut" value="/book" oninput="updateEditorHeader()">
+            </div>
+          </div>
+
+          <div class="ed-field">
+            <label>Category</label>
+            <select id="edCategory">
+              <option>Follow-up</option>
+              <option>Greeting</option>
+              <option>Pricing</option>
+              <option>Closing</option>
+            </select>
+          </div>
+
+          <div class="ed-field">
+            <label>Message body</label>
+            <textarea class="ed-textarea" id="edBody" oninput="updatePreviewBubble()">Thanks for reaching out! I'd love to learn more about your project. Would you be available for a quick 20-minute discovery call this week? You can book directly at acmestudio.ca/book, or just let me know a time that works and I'll send a calendar invite.</textarea>
+            <div class="hint">Use variables to personalize automatically.</div>
+            <div class="var-chips">
+              <span class="var-chip" onclick="insertVar('{{visitor_name}}')">{{visitor_name}}</span>
+              <span class="var-chip" onclick="insertVar('{{agent_name}}')">{{agent_name}}</span>
+              <span class="var-chip" onclick="insertVar('{{workspace_name}}')">{{workspace_name}}</span>
+              <span class="var-chip" onclick="insertVar('{{page_url}}')">{{page_url}}</span>
+            </div>
+          </div>
+
+          <!-- Preview -->
+          <div class="canned-preview-card">
+            <div class="cpv-label">Preview — how it appears in chat</div>
+            <div class="cpv-bubble" id="previewBubble">Thanks for reaching out! I'd love to learn more about your project. Would you be available for a quick 20-minute discovery call this week? You can book directly at acmestudio.ca/book, or just let me know a time that works and I'll send a calendar invite.</div>
+          </div>
+
+          <!-- Usage stats for this reply -->
+          <div style="margin-top:20px">
+            <div style="font-size:12px;font-weight:500;color:var(--ink2);margin-bottom:12px">Usage stats for this reply</div>
+            <div class="usage-row">
+              <div class="usage-card"><div class="usage-num">14</div><div class="usage-lbl">Times used (30d)</div></div>
+              <div class="usage-card"><div class="usage-num">72%</div><div class="usage-lbl">Led to resolution</div></div>
+              <div class="usage-card"><div class="usage-num">2m avg</div><div class="usage-lbl">Time to send</div></div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div class="screen app-screen" id="screen-widget">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="264e474b5c47664e4f414e48435555084549">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content" style="overflow:hidden">
+    <div class="page-header">
+      <div><h1>Chat bubble</h1><p>Customize how visitors see your widget — branding, quick replies, promos.</p></div>
+      <div style="display:flex;gap:10px;align-items:center"><div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">May 10, 2026</div></div>
+    </div>
+    <div class="wb-layout">
+
+      <!-- ══ LEFT CONFIG ══ -->
+      <div class="wb-config">
+        <div class="wb-config-tabs">
+          <button class="wb-tab active" onclick="wbTab(this,'branding')">🎨 Branding</button>
+          <button class="wb-tab" onclick="wbTab(this,'quickreplies')">⚡ Quick replies</button>
+          <button class="wb-tab" onclick="wbTab(this,'promos')">🎁 Promos</button>
+        </div>
+
+        <!-- ══ BRANDING ══ -->
+        <div class="wb-panel active" id="wbp-branding">
+
+          <div class="wb-section">
+            <div class="wb-section-title">Identity</div>
+            <div class="wb-field">
+              <label>Widget name</label>
+              <input type="text" id="wb-name" value="Acme Studio" oninput="wbSync()">
+            </div>
+            <div class="wb-field">
+              <label>Welcome message</label>
+              <input type="text" id="wb-welcome" value="Hi 👋 How can we help you today?" oninput="wbSync()">
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Avatar</div>
+            <div class="avatar-mode-row">
+              <button class="avatar-mode-btn active" id="avModeInitial" onclick="setAvatarMode('initial')">Initial</button>
+              <button class="avatar-mode-btn" id="avModeImage" onclick="setAvatarMode('image')">Image URL</button>
+            </div>
+            <div id="av-initial-wrap" class="wb-field">
+              <label>Initial letter</label>
+              <input type="text" id="wb-initial" value="A" maxlength="2" oninput="wbSync()" style="text-align:center;font-weight:800;font-size:18px;letter-spacing:0">
+            </div>
+            <div id="av-image-wrap" class="wb-field" style="display:none">
+              <label>Avatar image URL</label>
+              <input type="url" id="wb-avatar-url" placeholder="https://..." oninput="wbSync()">
+              <div class="hint">Square image recommended. Will be shown as a circle.</div>
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Colours</div>
+            <div class="wb-field">
+              <label>Primary (launcher, buttons, visitor bubbles)</label>
+              <div class="wb-color-row">
+                <input type="color" class="wb-color-inp" id="wb-color" value="#111111" oninput="wbColorSync()">
+                <input type="text" class="wb-hex" id="wb-color-hex" value="#111111" oninput="wbHexSync()">
+              </div>
+            </div>
+            <div class="wb-field">
+              <label>Message background</label>
+              <div class="wb-color-row">
+                <input type="color" class="wb-color-inp" id="wb-msgbg-color" value="#f5f5f5" oninput="wbSync()">
+                <input type="text" class="wb-hex" id="wb-msgbg-hex" value="#f5f5f5" oninput="wbMsgBgHexSync()">
+                <span style="font-size:11px;color:var(--ink4)">Agent bubble bg</span>
+              </div>
+            </div>
+            <div class="wb-field">
+              <label>Chat area background</label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+                <button class="avatar-mode-btn active" id="chatBgColor" onclick="setChatBgMode('color')" style="font-size:11px">Colour</button>
+                <button class="avatar-mode-btn" id="chatBgImage" onclick="setChatBgMode('image')" style="font-size:11px">Image URL</button>
+              </div>
+              <div id="chat-bg-color-wrap">
+                <div class="wb-color-row">
+                  <input type="color" class="wb-color-inp" id="wb-chatbg" value="#ffffff" oninput="wbSync()">
+                  <input type="text" class="wb-hex" id="wb-chatbg-hex" value="#ffffff" oninput="wbSync()">
+                </div>
+              </div>
+              <div id="chat-bg-img-wrap" style="display:none">
+                <input type="url" id="wb-chatbg-img" placeholder="https://..." style="width:100%;padding:8px 11px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:13px;font-family:var(--sans);outline:none" oninput="wbSync()">
+                <div class="hint">Tiled or cover — great for branded texture or soft pattern.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Typography</div>
+            <div class="wb-field">
+              <label>Font family</label>
+              <select id="wb-font" onchange="wbFontSync()">
+                <option value="Inter">Inter (default)</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Open Sans">Open Sans</option>
+                <option value="Lato">Lato</option>
+                <option value="Poppins">Poppins</option>
+                <option value="Nunito">Nunito</option>
+                <option value="DM Sans">DM Sans</option>
+                <option value="Plus Jakarta Sans">Plus Jakarta Sans</option>
+                <option value="Outfit">Outfit</option>
+                <option value="Figtree">Figtree</option>
+                <option value="Manrope">Manrope</option>
+                <option value="Work Sans">Work Sans</option>
+                <option value="Raleway">Raleway</option>
+                <option value="Montserrat">Montserrat</option>
+                <option value="Source Sans 3">Source Sans 3</option>
+                <option value="IBM Plex Sans">IBM Plex Sans</option>
+                <option value="Geist">Geist</option>
+                <option value="Georgia,serif">Georgia (serif)</option>
+                <option value="Playfair Display,serif">Playfair Display</option>
+                <option value="Merriweather,serif">Merriweather</option>
+              </select>
+            </div>
+            <div class="wb-field-row">
+              <div class="wb-field" style="margin:0">
+                <label>Body size</label>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <input type="number" id="wb-fontsize" value="13" min="10" max="20" style="width:60px" oninput="wbSync()">
+                  <span style="font-size:12px;color:var(--ink4)">px</span>
+                </div>
+              </div>
+              <div class="wb-field" style="margin:0">
+                <label>Border radius</label>
+                <select id="wb-radius" onchange="wbSync()">
+                  <option value="18">Rounded (18px)</option>
+                  <option value="24">Pill (24px)</option>
+                  <option value="8">Sharp (8px)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Widget size & position</div>
+            <div class="wb-field-row">
+              <div class="wb-field" style="margin:0">
+                <label>Width (px)</label>
+                <input type="number" id="wb-width" value="340" min="260" max="480" oninput="wbSizeSync()">
+              </div>
+              <div class="wb-field" style="margin:0">
+                <label>Height (px)</label>
+                <input type="number" id="wb-height" value="520" min="320" max="700" oninput="wbSizeSync()">
+              </div>
+            </div>
+            <div class="wb-field" style="margin-top:12px">
+              <label>Position preset</label>
+              <select id="wb-position" onchange="wbPositionMode()">
+                <option value="bottom-right">Bottom right</option>
+                <option value="bottom-left">Bottom left</option>
+                <option value="custom">Custom (px)</option>
+              </select>
+            </div>
+            <div id="wb-custom-pos" style="display:none;margin-top:8px">
+              <div class="wb-field-row">
+                <div class="wb-field" style="margin:0">
+                  <label>Bottom (px)</label>
+                  <input type="number" id="wb-pos-bottom" value="24" oninput="wbSync()">
+                </div>
+                <div class="wb-field" style="margin:0">
+                  <label>Right (px)</label>
+                  <input type="number" id="wb-pos-right" value="24" oninput="wbSync()">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Launcher icon</div>
+            <div class="launcher-picker" id="launcherPicker">
+              <div class="launcher-opt selected" data-icon="💬" onclick="selectLauncher(this,'💬')">💬</div>
+              <div class="launcher-opt" data-icon="🗨" onclick="selectLauncher(this,'🗨')">🗨</div>
+              <div class="launcher-opt" data-icon="✉" onclick="selectLauncher(this,'✉')">✉</div>
+              <div class="launcher-opt" data-icon="🤝" onclick="selectLauncher(this,'🤝')">🤝</div>
+              <div class="launcher-opt" data-icon="❓" onclick="selectLauncher(this,'❓')">❓</div>
+              <div class="launcher-opt custom-upload" onclick="showToast('Custom icon: upload via image URL below')">
+                <span style="font-size:16px">🖼</span>
+                <span>Custom</span>
+              </div>
+            </div>
+            <div class="wb-field">
+              <label>Custom icon URL (overrides above)</label>
+              <input type="url" id="wb-launcher-img" placeholder="https://... (SVG or PNG recommended)" oninput="wbSync()">
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Launcher effect</div>
+            <div class="effects-grid" id="effectsGrid">
+              <div class="effect-opt" data-effect="none" onclick="selectEffect(this,'none')">
+                <div class="effect-dot" style="background:#ccc"></div>
+                <span class="effect-label">None</span>
+              </div>
+              <div class="effect-opt active" data-effect="pulse" onclick="selectEffect(this,'pulse')">
+                <div class="effect-dot"></div>
+                <span class="effect-label">Pulse ring</span>
+              </div>
+              <div class="effect-opt" data-effect="glow" onclick="selectEffect(this,'glow')">
+                <div class="effect-dot"></div>
+                <span class="effect-label">Glow</span>
+              </div>
+              <div class="effect-opt" data-effect="bounce" onclick="selectEffect(this,'bounce')">
+                <div class="effect-dot"></div>
+                <span class="effect-label">Bounce</span>
+              </div>
+              <div class="effect-opt" data-effect="hover-border" onclick="selectEffect(this,'hover-border')">
+                <div class="effect-dot"></div>
+                <span class="effect-label">Hover border</span>
+              </div>
+              <div class="effect-opt" data-effect="shake" onclick="selectEffect(this,'shake')">
+                <div class="effect-dot"></div>
+                <span class="effect-label">Shake hover</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Typing indicator</div>
+            <div class="wb-field">
+              <label>Loading animation style</label>
+              <div class="anim-grid" id="animGrid">
+                <div class="anim-opt active" data-anim="elastic" onclick="selectAnim(this,'elastic')">
+                  <div class="anim-preview"><div style="color:#888;position:relative;left:13px"><div class="dot-elastic"></div></div></div>
+                  <span class="anim-label">Elastic</span>
+                </div>
+                <div class="anim-opt" data-anim="pulse" onclick="selectAnim(this,'pulse')">
+                  <div class="anim-preview" style="overflow:hidden"><div style="color:#888;position:relative;left:20px"><div class="dot-pulse"></div></div></div>
+                  <span class="anim-label">Pulse</span>
+                </div>
+                <div class="anim-opt" data-anim="flashing" onclick="selectAnim(this,'flashing')">
+                  <div class="anim-preview"><div style="color:#888;position:relative;left:13px"><div class="dot-flashing"></div></div></div>
+                  <span class="anim-label">Flashing</span>
+                </div>
+                <div class="anim-opt" data-anim="typing" onclick="selectAnim(this,'typing')">
+                  <div class="anim-preview" style="overflow:hidden"><div style="color:#888;position:relative;left:20px"><div class="dot-typing"></div></div></div>
+                  <span class="anim-label">Typing</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="wb-section">
+            <div class="wb-section-title">Behaviour</div>
+            <div class="wb-toggle-row">
+              <div><div class="wb-toggle-label">Show "Chat by Chattt" badge</div><div class="wb-toggle-sub">Remove on Pro plan</div></div>
+              <button class="tsw on" id="tsw-badge" onclick="tsToggle(this,'badge')"></button>
+            </div>
+            <div class="wb-toggle-row">
+              <div><div class="wb-toggle-label">Auto-open after 30s</div><div class="wb-toggle-sub">Opens widget automatically</div></div>
+              <button class="tsw" id="tsw-autoopen" onclick="tsToggle(this,'autoopen')"></button>
+            </div>
+            <div class="wb-toggle-row">
+              <div><div class="wb-toggle-label">Show visitor page to agent</div><div class="wb-toggle-sub">Visible in inbox thread header</div></div>
+              <button class="tsw on" id="tsw-pageurl" onclick="tsToggle(this,'pageurl')"></button>
+            </div>
+            <div class="wb-toggle-row">
+              <div><div class="wb-toggle-label">Collect email before chatting</div><div class="wb-toggle-sub">Optional pre-chat form</div></div>
+              <button class="tsw" id="tsw-preemail" onclick="tsToggle(this,'preemail')"></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ══ QUICK REPLIES ══ -->
+        <div class="wb-panel" id="wbp-quickreplies">
+          <p style="font-size:13px;color:var(--ink3);margin-bottom:16px;line-height:1.6">Visitor-facing buttons shown at the bottom of the widget. Each can send a preset message or open a link.</p>
+          <div id="qr-list"></div>
+          <button class="add-item-btn" onclick="addQR()">+ Add quick reply</button>
+        </div>
+
+        <!-- ══ PROMOS ══ -->
+        <div class="wb-panel" id="wbp-promos">
+          <p style="font-size:13px;color:var(--ink3);margin-bottom:16px;line-height:1.6">Promo cards show above the chat messages. Only one can be active at a time. Switch to the "Promo" preview to see it rendered.</p>
+          <div id="promo-list"></div>
+          <button class="add-item-btn" onclick="addPromo()">+ Add promo</button>
+        </div>
+      </div>
+
+      <!-- ══ RIGHT PREVIEW ══ -->
+      <div class="wb-preview">
+        <div class="wb-preview-bar">
+          <h3>Live preview</h3>
+          <div class="wb-state-tabs">
+            <button class="wb-state-tab active" onclick="wbState(this,'online')">● Online</button>
+            <button class="wb-state-tab" onclick="wbState(this,'offline')">○ Offline</button>
+            <button class="wb-state-tab" onclick="wbState(this,'promo')">🎁 Promo</button>
+          </div>
+          <button class="wb-save-btn" onclick="showToast('Widget settings saved ✓')">Save & publish</button>
+        </div>
+
+        <div class="wb-stage">
+          <div class="wb-fake-page">
+            <div class="wfp-bar">
+              <div class="wfp-dot" style="background:#ff5f57"></div>
+              <div class="wfp-dot" style="background:#febc2e"></div>
+              <div class="wfp-dot" style="background:#28c840"></div>
+            </div>
+            <div class="wfp-content">
+              <div class="wfp-h"></div><div class="wfp-p"></div>
+              <div class="wfp-p" style="width:65%"></div><div class="wfp-btn"></div>
+            </div>
+          </div>
+
+          <!-- Widget panel -->
+          <div class="wbw" id="wbWidget">
+            <div class="wbw-hdr" id="wbwHdr">
+              <div class="wbw-av" id="wbwAv">A</div>
+              <div>
+                <div class="wbw-name" id="wbwName">Acme Studio</div>
+                <div class="wbw-status"><span class="wbw-sdot" id="wbwDot" style="background:#22c55e"></span><span id="wbwStatusTxt">Online — replies in minutes</span></div>
+              </div>
+            </div>
+            <div class="wbw-offline-banner" id="wbwOfflineBanner">⚑ We're away — leave a message and we'll reply soon</div>
+            <div class="wbw-promo" id="wbwPromo" style="display:none">
+              <div class="wbw-promo-img" id="wbwPromoImg" style="background:linear-gradient(135deg,#1a1a1a,#333)">
+                <span class="wbw-promo-tag" id="wbwPromoTagEl" style="background:var(--orange)">OFFER</span>
+              </div>
+              <div class="wbw-promo-body">
+                <div class="wbw-promo-hl" id="wbwPromoHl">Spring Renovation Special</div>
+                <div class="wbw-promo-sub" id="wbwPromoSub">15% off full-home projects booked before June 1</div>
+                <button class="wbw-promo-cta" id="wbwPromoCta" style="background:var(--orange)">Book now →</button>
+              </div>
+            </div>
+            <div class="wbw-msgs" id="wbwMsgs">
+              <div class="wbw-msg-a" id="wbwWelcome">Hi 👋 How can we help you today?</div>
+            </div>
+            <!-- Typing indicator -->
+            <div class="wbw-typing" id="wbwTyping">
+              <div class="wbw-typing-bubble" id="wbwTypingBubble">
+                <div style="position:relative;left:13px;color:#aaa"><div class="dot-elastic" id="wbwDotAnim"></div></div>
+              </div>
+            </div>
+            <div class="wbw-qr" id="wbwQRRow"></div>
+            <div class="wbw-offline-form" id="wbwOfflineForm">
+              <div style="font-size:13px;font-weight:700;margin-bottom:4px">Leave us a message</div>
+              <div style="font-size:12px;color:#888;margin-bottom:12px">We'll reply by email within 1 business day.</div>
+              <input style="width:100%;border:1.5px solid #ebebeb;border-radius:8px;padding:8px 10px;font-size:12px;font-family:inherit;outline:none;margin-bottom:8px" placeholder="Your name">
+              <input style="width:100%;border:1.5px solid #ebebeb;border-radius:8px;padding:8px 10px;font-size:12px;font-family:inherit;outline:none;margin-bottom:8px" placeholder="your@email.com" type="email">
+              <textarea style="width:100%;border:1.5px solid #ebebeb;border-radius:8px;padding:8px 10px;font-size:12px;font-family:inherit;outline:none;resize:none;margin-bottom:8px" rows="2" placeholder="How can we help?"></textarea>
+              <button style="width:100%;padding:9px;background:#111;color:white;border:none;border-radius:8px;font-size:13px;font-weight:700;font-family:inherit;cursor:pointer">Send message →</button>
+              <div style="font-size:10px;color:#ccc;text-align:center;margin-top:6px">By submitting you agree to be contacted.</div>
+            </div>
+            <div class="wbw-inp-row" id="wbwInpRow">
+              <input class="wbw-inp" id="wbwInput" placeholder="Type a message…" onkeydown="if(event.key==='Enter'){wbSend();event.preventDefault()}">
+              <button class="wbw-send" id="wbwSend" style="background:#111" onclick="wbSend()">→</button>
+            </div>
+            <div class="wbw-badge" id="wbwBadge">Chat by <strong>Chattt</strong></div>
+          </div>
+
+          <!-- Launcher (stays fixed, toggles to ×) -->
+          <button class="wbw-launcher launcher-pulse" id="wbwLauncher" style="background:#111;display:none" onclick="wbToggle()">
+            <span id="wbwLauncherIcon">💬</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════
+     ANALYTICS
+═══════════════════════════════ -->
+</div>
+
+<div class="screen app-screen" id="screen-settings">
+  <div class="topbar">
+  <div class="topbar-logo" onclick="go('dashboard')"><img src="LOGO_SRC" alt="Chattt" style="height:28px;display:block"></div>
+  <div class="topbar-inner">
+    <nav class="topbar-nav">
+      <button class="topbar-nav-item" data-screen="dashboard" onclick="go('dashboard')"><span class="nav-icon">⊞</span> Dashboard</button>
+      <button class="topbar-nav-item" data-screen="inbox" onclick="go('inbox')"><span class="nav-icon">💬</span> Inbox<span class="topbar-nav-badge">3</span></button>
+      <button class="topbar-nav-item" data-screen="contacts" onclick="go('contacts')"><span class="nav-icon">👤</span> Contacts</button>
+      <button class="topbar-nav-item" data-screen="analytics" onclick="go('analytics')"><span class="nav-icon">📊</span> Analytics</button>
+      <button class="topbar-nav-item" data-screen="canned" onclick="go('canned')"><span class="nav-icon">📝</span> Canned</button>
+      <button class="topbar-nav-item" data-screen="widget" onclick="go('widget')"><span class="nav-icon">🔲</span> Widget builder</button>
+      
+    </nav>
+  </div>
+  <div class="topbar-right">
+      <button class="snippet-trigger" onclick="toggleSnippetPopover()">
+        <span class="snippet-live-dot"></span>Widget connected
+      </button>
+      <button class="status-pill online" id="statusPill" onclick="toggleStatus()">
+        <span class="sp-sdot" id="statusDot" style="background:var(--green)"></span>
+        <span id="statusLabel">Online</span>
+      </button>
+      <div class="acct-pill" onclick="toggleAcctMenu(event)">
+        <img class="up-avatar" src="AVATAR_SRC" alt="Hamza">
+        <span class="up-name">Hamza</span>
+        <span class="acct-chevron">⌄</span>
+        <div class="acct-menu">
+          <div class="acct-menu-header">
+            <img class="acct-menu-avatar" src="AVATAR_SRC" alt="Hamza">
+            <div>
+              <div class="acct-menu-name">Hamza</div>
+              <div class="acct-menu-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="553d34382f34153d3c323d3b3026267b363a">[email&#160;protected]</a></div>
+            </div>
+          </div>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item" onclick="goSettings('workspace',event)"><span class="ami">🏢</span> Workspace</button>
+          <button class="acct-menu-item" onclick="goSettings('offline',event)"><span class="ami">📭</span> Offline form</button>
+          <button class="acct-menu-item" onclick="goSettings('team',event)"><span class="ami">👥</span> Team</button>
+          <button class="acct-menu-item" onclick="goSettings('billing',event)"><span class="ami">💳</span> Billing</button>
+          <div class="acct-menu-divider"></div>
+          <button class="acct-menu-item danger" onclick="logOut(event)"><span class="ami">→</span> Log out</button>
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="snippet-popover" id="snippetPopover">
+    <div class="sp-header">
+      <h3>Widget snippet</h3>
+      <button class="sp-close" onclick="closeSnippetPopover()">×</button>
+    </div>
+    <div class="sp-status">
+      <span class="sp-status-dot"></span>
+      <div>
+        <div class="sp-status-text">Connected &amp; live</div>
+        <div class="sp-status-sub">Since May 1, 2026 · acmestudio.ca</div>
+      </div>
+    </div>
+    <div class="sp-code"><span class="t-tag">&lt;script</span>
+  <span class="t-attr">src</span>=<span class="t-val">"https://cdn.chattt.co/widget.js"</span>
+  <span class="t-attr">data-workspace</span>=<span class="t-val">"wsp_a4f8e2b1c9"</span>
+  <span class="t-attr">defer</span>
+<span class="t-tag">&gt;&lt;/script&gt;</span></div>
+    <div class="sp-footer">
+      <button class="sp-copy-btn" onclick="copySnippet()">Copy snippet</button>
+      <span class="sp-docs" onclick="showToast('Docs opening…')">View docs →</span>
+    </div>
+  </div>
+  <div class="popover-backdrop" id="popoverBackdrop" onclick="closeSnippetPopover()"></div>
+  <div class="main-content" style="overflow:hidden">
+    <div class="page-header">
+      <div><h1>Settings</h1><p>Manage your workspace, offline form, team, and billing.</p></div>
+      <div style="display:flex;gap:10px;align-items:center"><div style="font-size:11px;font-family:var(--mono);color:var(--ink4)">May 10, 2026</div></div>
+    </div>
+    <div class="settings-layout" style="display:grid;grid-template-columns:200px 1fr;height:100%;overflow:hidden">
+      <div class="settings-nav" style="border-right:1px solid var(--border);background:var(--white);padding:20px 12px">
+        <h2 style="font-size:13px;font-weight:700;color:var(--ink);letter-spacing:-.02em;margin-bottom:12px;padding:0 6px">Settings</h2>
+        <div class="settings-nav-item active" onclick="switchSettings(this,'workspace')"><span class="sn-icon">🏢</span> Workspace</div>
+        <div class="settings-nav-item" onclick="switchSettings(this,'offline')"><span class="sn-icon">📭</span> Offline Form</div>
+        <div class="settings-nav-item" onclick="switchSettings(this,'team')"><span class="sn-icon">👥</span> Team</div>
+        <div class="settings-nav-item" onclick="switchSettings(this,'billing')"><span class="sn-icon">💳</span> Billing & Plan</div>
+      </div>
+      <div class="settings-body" style="overflow-y:auto;padding:28px 32px">
+
+        <div class="settings-section active" id="settings-workspace">
+          <h2 style="font-size:18px;font-weight:800;letter-spacing:-.04em;margin-bottom:4px">Workspace</h2>
+          <p style="font-size:13px;color:var(--ink3);margin-bottom:28px;line-height:1.5">Basic info and availability settings.</p>
+          <div class="settings-card">
+            <div class="settings-card-header"><div><h3>General</h3></div></div>
+            <div class="settings-card-body">
+              <div class="settings-field"><label>Workspace name</label><input type="text" value="Acme Studio"></div>
+              <div class="settings-field"><label>Notification email <span style="font-size:11px;color:var(--ink4);font-weight:400">(alerts sent here)</span></label><input type="email" value="hamza@highness.co"></div>
+              <div class="settings-field"><label>Display email <span style="font-size:11px;color:var(--ink4);font-weight:400">(shown to visitors)</span></label><input type="email" value="hello@acmestudio.ca"></div>
+              <div class="settings-field-row">
+                <div class="settings-field" style="margin:0"><label>Timezone</label><select><option>America/Toronto (EST)</option><option>America/Vancouver</option></select></div>
+                <div class="settings-field" style="margin:0"><label>Website URL</label><input type="text" value="https://acmestudio.ca"></div>
+              </div>
+            </div>
+          </div>
+          <div class="settings-card">
+            <div class="settings-card-header"><div><h3>Messages</h3></div></div>
+            <div class="settings-card-body">
+              <div class="settings-field"><label>Welcome message</label><input type="text" value="Hi 👋 Welcome to Acme Studio. How can we help today?"></div>
+              <div class="settings-field"><label>Away message</label><input type="text" value="We're away — leave a message and we'll reply within 1 business day."></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px"><button class="save-btn" onclick="showToast('Workspace settings saved ✓')">Save changes</button><button class="save-btn secondary">Cancel</button></div>
+        </div>
+
+        <div class="settings-section" id="settings-offline">
+          <h2 style="font-size:18px;font-weight:800;letter-spacing:-.04em;margin-bottom:4px">Offline Form</h2>
+          <p style="font-size:13px;color:var(--ink3);margin-bottom:28px">Configure the lead capture form shown when your team is offline.</p>
+          <div class="settings-card">
+            <div class="settings-card-header"><div><h3>Form settings</h3></div></div>
+            <div class="settings-card-body">
+              <div class="settings-field"><label>Form title</label><input type="text" value="Leave us a message"></div>
+              <div class="settings-field"><label>Subtitle</label><input type="text" value="We'll reply to your email within 1 business day."></div>
+              <div class="settings-field"><label>Required fields</label>
+                <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px">
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;color:var(--ink2);cursor:pointer"><input type="checkbox" checked style="width:auto"> Name</label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;color:var(--ink2);cursor:pointer"><input type="checkbox" checked style="width:auto"> Email <span style="font-size:11px;color:var(--ink4)">(always required)</span></label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;color:var(--ink2);cursor:pointer"><input type="checkbox" checked style="width:auto"> Message</label>
+                  <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:400;color:var(--ink2);cursor:pointer"><input type="checkbox" style="width:auto"> Phone number</label>
+                </div>
+              </div>
+              <div class="settings-field"><label>Consent text</label><input type="text" value="By submitting you agree to being contacted by Acme Studio."><div class="hint" style="font-size:11px;color:var(--ink4);margin-top:4px">Required for GDPR compliance.</div></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px"><button class="save-btn" onclick="showToast('Offline form saved ✓')">Save changes</button><button class="save-btn secondary">Cancel</button></div>
+        </div>
+
+        <div class="settings-section" id="settings-team">
+          <h2 style="font-size:18px;font-weight:800;letter-spacing:-.04em;margin-bottom:4px">Team</h2>
+          <p style="font-size:13px;color:var(--ink3);margin-bottom:28px">Manage agents. Extra seats are $9/month on Pro.</p>
+          <div class="settings-card">
+            <div class="settings-card-header"><div><h3>Members</h3><p style="font-size:12px;color:var(--ink3);margin-top:2px">1 of 1 seat on Free plan.</p></div><button class="copy-btn" onclick="showToast('Upgrade to Pro to invite teammates')">Invite agent</button></div>
+            <div class="settings-card-body" style="padding:16px 20px">
+              <table class="team-table"><thead><tr><th>Member</th><th>Role</th><th>Status</th><th></th></tr></thead>
+              <tbody><tr>
+                <td><div class="team-member"><div class="tm-av">H</div><div><div class="tm-name">Hamza</div><div class="tm-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f89099958299b890919f90969d8b8bd69b97">[email&#160;protected]</a></div></div></div></td>
+                <td><span class="role-badge owner">Owner</span></td>
+                <td><span style="font-size:12px;color:var(--green);display:flex;align-items:center;gap:5px"><span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block"></span>Online</span></td>
+                <td><span style="color:var(--ink4)">—</span></td>
+              </tr></tbody></table>
+            </div>
+          </div>
+        </div>
+
+        <div class="settings-section" id="settings-billing">
+          <h2 style="font-size:18px;font-weight:800;letter-spacing:-.04em;margin-bottom:4px">Billing & Plan</h2>
+          <p style="font-size:13px;color:var(--ink3);margin-bottom:28px">You're on the Free plan.</p>
+          <div class="plan-cards" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px">
+            <div class="plan-card current" style="border:1.5px solid var(--orange)">
+              <div class="plan-current-badge">Current</div>
+              <div class="plan-name">Free</div><div class="plan-price">$0 <span>/month</span></div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> 1 agent seat</div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> Unlimited conversations</div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> Widget builder</div>
+              <div class="plan-feature"><span class="pf-icon dim">✗</span> <span style="color:var(--ink4)">White-label</span></div>
+            </div>
+            <div class="plan-card" onclick="showToast('Redirecting to checkout…')" style="border:1.5px solid var(--border);cursor:pointer">
+              <div class="plan-name">Pro</div><div class="plan-price">$19 <span>/month</span></div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> Everything in Free</div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> Full white-label widget</div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> CSV export</div>
+              <div class="plan-feature"><span class="pf-icon">✓</span> Extra seats at $9/seat/mo</div>
+            </div>
+          </div>
+          <button class="save-btn" onclick="showToast('Redirecting to Stripe…')" style="margin-bottom:28px">Upgrade to Pro — $19/mo</button>
+          <div style="border:1.5px solid #fecaca;border-radius:var(--r-lg);padding:18px 20px;display:flex;align-items:center;justify-content:space-between">
+            <div><h4 style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:3px">Delete workspace</h4><p style="font-size:12px;color:var(--ink3)">Permanently deletes all data including contacts.</p></div>
+            <button class="danger-btn" onclick="showToast('Check your email to confirm.')">Delete workspace</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NEW CONVERSATION NOTIFICATION SYSTEM ── -->
+<div class="conv-notif-backdrop" id="convNotifBackdrop"></div>
+<div class="screen-flash" id="screenFlash"></div>
+<div class="conv-notif-stack" id="convNotifStack"></div>
+<button class="sound-toggle" id="soundToggle" title="Toggle notification sound" onclick="toggleSound()">🔔</button>
+
+<div class="toast" id="toast"></div>
